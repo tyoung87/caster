@@ -1,6 +1,7 @@
 import time
 import sys
 
+from dragonfly import Mouse
 from dragonfly.actions.action_key import Key
 from dragonfly.actions.action_text import Text
 
@@ -64,6 +65,12 @@ def get_text_format_description(capitalization, spacing):
         text = get_formatted_text(capitalization, spacing, str("this is a test"))
         return "%s %s (%s)" % (caps[capitalization], spaces[spacing], text)
 
+def master_format_text_camel(textnv):
+    master_format_text(3, 1, textnv)
+
+def master_format_text_pascal(textnv):
+    master_format_text(2, 1, textnv)
+
 def master_format_text(capitalization, spacing, textnv):
     capitalization, spacing = normalize_text_format(capitalization, spacing)
     Text(get_formatted_text(capitalization, spacing, str(textnv))).execute()    
@@ -85,6 +92,8 @@ def get_formatted_text(capitalization, spacing, t):
             t = t.capitalize()
         elif capitalization == 5:
             t = t.lower()
+    else:
+        t = t.lower()
     if spacing != 0:
         if spacing == 1:
             t = "".join(t.split(" "))
@@ -97,6 +106,98 @@ def get_formatted_text(capitalization, spacing, t):
 def prior_text_format(textnv):
     global _CAPITALIZATION, _SPACING
     Text(get_formatted_text(_CAPITALIZATION, _SPACING, str(textnv))).execute()
+
+def hold_modifier(short_mode):
+    if "s" in short_mode:
+        Key("shift:down").execute()
+    if "a" in short_mode:
+        Key("alt:down").execute()
+    if "c" in short_mode:
+        Key("control:down").execute()
+    if "w" in short_mode:
+        Key("win:down").execute()
+    time.sleep(settings.SETTINGS["miscellaneous"]["keypress_wait"]/1000.)
+
+def master_short(short_mode, key, nnavi500):
+    '''
+    <short_mode> <key> [<nnavi500>]
+    short_mode: "shift" s, "troll" c, "alt" a, "wind" w, "trot" ca, "shoal" cs, "tron" wc, "shalt" sa, "walt" wa, "shin" ws, (default None)
+    key: key to press (default None)
+    nnavi500: number of keypresses (default 1)
+    '''
+    
+    k = str(short_mode) + "-" + str(key) + "/5:" + str(nnavi500)
+    Key(k).execute()
+    time.sleep(settings.SETTINGS["miscellaneous"]["keypress_wait"]/1000.)
+
+def master_short_mouse(short_mode, mouse_action):
+    '''
+    <short_mode><mouse_action>
+    short_mode: "shift" s, "troll" c, "alt" a, "wind" w, "trot" ca, "shoal" cs, "tron" wc, "shalt" sa, "walt" wa, "shin" ws, (default None)
+	mouse_action:
+    '''
+    
+    if short_mode == "s":
+        Key("shift:down").execute()
+        Mouse(mouse_action).execute()
+        Key("shift:up").execute()
+    elif short_mode == "c":
+        Key("control:down").execute()
+        Mouse(mouse_action).execute()
+        Key("control:up").execute()
+    elif short_mode == "a":
+        Key("alt:down").execute()
+        Mouse(mouse_action).execute()
+        Key("alt:up").execute()
+    elif short_mode == "w":
+        Key("win:down").execute()
+        Mouse(mouse_action).execute()
+        Key("win:up").execute()
+    elif short_mode == "ca":
+        Key("control:down").execute()
+        Key("alt:down").execute()
+        Mouse(mouse_action).execute()
+        Key("control:up").execute()
+        Key("alt:up").execute()
+    elif short_mode == "cs":
+        Key("control:down").execute()
+        Key("shift:down").execute()
+        Mouse(mouse_action).execute()
+        Key("control:up").execute()
+        Key("shift:up").execute()
+    elif short_mode == "wc":
+        Key("win:down").execute()
+        Key("control:down").execute()
+        Mouse(mouse_action).execute()
+        Key("win:up").execute()
+        Key("control:up").execute()
+    elif short_mode == "sa":
+        Key("shift:down").execute()
+        Key("alt:down").execute()
+        Mouse(mouse_action).execute()
+        Key("shift:up").execute()
+        Key("alt:up").execute()
+    elif short_mode == "wa":
+        Key("win:down").execute()
+        Key("alt:down").execute()
+        Mouse(mouse_action).execute()
+        Key("win:up").execute()
+        Key("alt:up").execute()
+    elif short_mode == "ws":
+        Key("win:down").execute()
+        Key("shift:down").execute()
+        Mouse(mouse_action).execute()
+        Key("win:up").execute()
+        Key("shift:up").execute()
+    elif short_mode == "cas":
+        Key("control:down").execute()
+        Key("alt:down").execute()
+        Key("shift:down").execute()
+        Mouse(mouse_action).execute()
+        Key("control:up").execute()
+        Key("alt:up").execute()
+        Key("shift:up").execute()
+    time.sleep(settings.SETTINGS["miscellaneous"]["keypress_wait"]/1000.)
 
 def master_text_nav(mtn_mode, mtn_dir, nnavi500, extreme):
     '''

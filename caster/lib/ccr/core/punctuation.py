@@ -48,7 +48,13 @@ class Punctuation(MergeRule):
         'tabby [<npunc>]':                  R(Key("tab"), rdescript="Tab") * Repeat(extra="npunc"),
         "boom":                             R(Text(", "), rdescript="Comma + Space"),
         "ampersand":                        R(Key("ampersand"), rdescript="Ampersand"),
-        
+        "leap":                             R(Text("("), rdescript="Left Paren"),
+        "reap":                             R(Text(")"), rdescript="Right Paren"),
+        "lake":                             R(Text("{"), rdescript="Left Curly"),
+        "rake":                             R(Text("}"), rdescript="Right Curly"),
+        "lobe":                             R(Text("["), rdescript="Left Bracket"),
+        "robe":                             R(Text("]"), rdescript="Right Bracket"),
+        "backtick":                          R(Text("`"), rdescript="Backtick"),
           }
  
 

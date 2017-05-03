@@ -42,10 +42,25 @@ class NavigationNon(MappingRule):
         "shift right click":                R(Key("shift:down") + Mouse("right") + Key("shift:up"), rdescript="Mouse: Shift + Right Click"),
         "curse <direction> [<direction2>] [<nnavi500>] [<dokick>]": R(Function(navigation.curse), rdescript="Curse"),
         "scree <direction> [<nnavi500>]":   R(Function(navigation.wheel_scroll), rdescript="Wheel Scroll"),
-      
+        
+        "dug":                              R(Mouse("left:down"), rdescript="Start Mouse Drag"),
+        "lego":                            R(Mouse("left:up") + Key("shift:up") + Key("alt:up") + Key("control:up") + Key("win:up"), rdescript="Release Held Keys"),
+        
         "colic":                            R(Key("control:down") + Mouse("left") + Key("control:up"), rdescript="Mouse: Ctrl + Left Click"),
         "garb [<nnavi500>]":                R(Mouse("left")+Mouse("left")+Key("c-c")+Function(navigation.clipboard_to_file, nexus=_NEXUS), rdescript="Highlight @ Mouse + Copy"),
         "drop [<nnavi500>]":                R(Mouse("left")+Mouse("left")+Function(navigation.drop, nexus=_NEXUS), rdescript="Highlight @ Mouse + Paste"),
+        "fun one":                          R(Key("f1"), rdescript="F1"),
+        "fun two":                          R(Key("f2"), rdescript="F2"),
+        "fun three":                        R(Key("f3"), rdescript="F3"),
+        "fun four":                         R(Key("f4"), rdescript="F4"),
+        "fun five":                         R(Key("f5"), rdescript="F5"),
+        "fun six":                          R(Key("f6"), rdescript="F6"),
+        "fun seven":                        R(Key("f7"), rdescript="F7"),
+        "fun eight":                        R(Key("f8"), rdescript="F8"),
+        "fun nine":                         R(Key("f9"), rdescript="F9"),
+        "fun ten":                          R(Key("f10"), rdescript="F10"),
+        "fun eleven":                       R(Key("f11"), rdescript="F11"),
+        "fun twelve":                       R(Key("f12"), rdescript="F12"),
         
         "sure stoosh":                      R(Key("c-c"), rdescript="Simple Copy"),
         "sure cut":                         R(Key("c-x"), rdescript="Simple Cut"),
@@ -123,10 +138,27 @@ class Navigation(MergeRule):
                                                       rdescript="Jump: Back In" ),
     
     # keyboard shortcuts
-    'save':                         R(Key("c-s"), rspec="save", rdescript="Save"),
-    'shock [<nnavi50>]':            R(Key("enter"), rspec="shock", rdescript="Enter")* Repeat(extra="nnavi50"),
+    'salve':                         R(Key("c-s"), rspec="save", rdescript="Save"),
+    'slap [<nnavi50>]':              R(Key("enter"), rspec="slap", rdescript="Enter")* Repeat(extra="nnavi50"),
+    'slap up':                       R(Key("escape, up, end, enter"), rspec="slap up", rdescript="Line Above"),
+    'slap down':                     R(Key("escape, end, enter"), rspec="slap down", rdescript="Line Below"),
+    'curslap':                       R(Key("escape, lbrace, rbrace, left, enter"), rspec="curslap", rdescript="Curly New Line"),
+    
+    'north':                     R(Key("c-home"), rspec="north", rdescript="Ctrl Home"),
+    'south':                     R(Key("c-end"), rspec="south", rdescript="Ctrl End"),
+    'east':                     R(Key("end"), rspec="east", rdescript="End"),
+    'west':                     R(Key("home"), rspec="west", rdescript="Home"),
+    
+    'page up':                     R(Key("pgup"), rspec="page up", rdescript="Page Up"),
+    'page down':                     R(Key("pgdown"), rspec="page down", rdescript="Page Down"),
     
     "(<mtn_dir> | <mtn_mode> [<mtn_dir>]) [(<nnavi500> | <extreme>)]": R(Function(textformat.master_text_nav), rdescript="Keyboard Text Navigation"),
+    "<short_mode> <key> [<nnavi500>]":        R(Function(textformat.master_short), rdescript="Keyboard Shortcut"),
+    "<short_mode> <mouse_action>":            R(Function(textformat.master_short_mouse), rdescript="Mouse Shortcut"),
+    "hold <short_mode>":                      R(Function(textformat.hold_modifier), rdescript="Hold Modifier"),
+    "alt":                          R(Key("alt"), rdescript="Alt"),
+    "wind":                         R(Key("win"), rdescript="Win"),
+    "null":                         R(Key("n, u, l, l"), rdescript="Null"),
     
     "stoosh [<nnavi500>]":          R(Key("c-c")+Function(navigation.clipboard_to_file, nexus=_NEXUS), rspec="stoosh", rdescript="Copy"),
     "cut [<nnavi500>]":             R(Key("c-x")+Function(navigation.clipboard_to_file, nexus=_NEXUS), rspec="cut", rdescript="Cut"),
@@ -143,10 +175,14 @@ class Navigation(MergeRule):
     "Kraken":                       R(Key("c-space"), rspec="Kraken", rdescript="Control Space"),
          
     # text formatting
-    "set format (<capitalization> <spacing> | <capitalization> | <spacing>) (bow|bowel)":  R(Function(textformat.set_text_format), rdescript="Set Text Format"),
+    "set format (<spacing> <capitalization> | <capitalization> | <spacing>)":  R(Function(textformat.set_text_format), rdescript="Set Text Format"),
     "clear caster formatting":      R(Function(textformat.clear_text_format), rdescript="Clear Caster Formatting"),
     "peek format":                  R(Function(textformat.peek_text_format), rdescript="Peek Format"),
-    "(<capitalization> <spacing> | <capitalization> | <spacing>) (bow|bowel) <textnv> [brunt]":  R(Function(textformat.master_format_text), rdescript="Text Format"), 
+    "camel <textnv>":                        R(Function(textformat.master_format_text_camel), rdescript="Camel Case"),
+    "pascal <textnv>":                       R(Function(textformat.master_format_text_pascal), rdescript="Pascal Case"),
+    "dock mel <textnv>":                     R(Key("dot")+Function(textformat.master_format_text_camel), rdescript="Dot Camel Case"),
+    "(dop|dot) scal <textnv>":                     R(Key("dot")+Function(textformat.master_format_text_pascal), rdescript="Dot Pascal Case"),
+    "(<spacing> <capitalization> | <capitalization> | <spacing>) <textnv>":  R(Function(textformat.master_format_text), rdescript="Text Format"), 
     "format <textnv>":              R(Function(textformat.prior_text_format), rdescript="Last Text Format"),
     
     "dredge":                       R(Key("a-tab"), rdescript="Alt-Tab"),
@@ -154,15 +190,23 @@ class Navigation(MergeRule):
     }
 
     extras = [
+        alphanumeric.get_key_choice("key"),
+        Choice("short_mode",
+                {"shift": "s", "troll": "c", "alt": "a", "wind": "w", "trot": "ca", "shoal": "cs", "tron": "wc", "shalt": "sa", "walt": "wa", "shin": "ws", "trash": "cas"
+                }),
+        Choice("mouse_action",
+                {"kick": "left", "kick mid": "middle", "psychic": "right", "dub kick": "left:2"
+                }),
+        
         IntegerRefST("nnavi50", 1, 50),
         IntegerRefST("nnavi500", 1, 500),
         Dictation("textnv"),
         
         Choice("capitalization",
-                  {"yell": 1, "tie": 2,"Gerrish": 3,"sing":4, "laws":5
+                  {"scream": 1, "scal": 2,"mel": 3,"tense":4, "laws":5
                   }),
         Choice("spacing",
-                  {"gum": 1, "gun": 1, "spine": 2, "snake":3
+                  {"smash": 1, "spine": 2, "snake":3
                   }),
         Choice("semi",
                     {"dock": ";", "doc": ";", "sink": ""
